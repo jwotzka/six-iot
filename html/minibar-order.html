@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>SIX IoT Showcase</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <script type="text/javascript" src="js/jquery.js"></script>
+
+  <script type="text/javascript">
+  
+  	var ITEM = {
+			    'cola': 'Coke',
+			    'fanta': 'Fanta',
+			    'sprite': 'Sprite',
+			    'nuts': 'Nuts',
+			    'heineken': 'Heineken 0.3'
+		    };
+	var PRICE = {
+			    'cola': 150,
+			    'fanta': 150,
+			    'sprite': 150,
+			    'nuts': 100,
+			    'heineken': 200
+			};
+		    
+    var items = {  
+	   "door_top":[  
+	      "cola",
+	      "cola",
+	      "cola",
+	      "cola",
+	      "cola",
+	      "cola"
+	   ],
+	   "bot":[  
+	      'fanta',
+	      'fanta',
+	      'fanta',
+	      'fanta',
+	      'fanta',
+	      'fanta',
+	      'fanta',
+	      'fanta'
+	   ],
+	   "top":[  
+	      'sprite',
+	      'sprite',
+	      'sprite',
+	      'sprite',
+	      'sprite',
+	      'sprite',
+	      'sprite',
+	      'sprite'
+	   ],
+	   "mid":[  
+	      'sprite',
+	      'sprite',
+	      'sprite',
+	      'sprite',
+	      'sprite',
+	      'sprite',
+	      'sprite',
+	      'sprite'
+	   ],
+	   "door_bot":[  
+	      'heineken',
+	      'heineken',
+	      'heineken',
+	      'heineken'
+	   ]
+	};
+  
+  	
+  	function updateItemList(result) {
+  	
+  		var missing = {};
+	
+		$("#items").find("tr:gt(0)").remove();
+	
+		$.each(result,function(k,v) {
+			$.each(v, function(index, sensor) {
+				if (!sensor) {
+					if (missing[items[k][index]]) {
+						missing[items[k][index]]++;
+					} else {
+						missing[items[k][index]] = 1;
+					}
+				}
+			});
+		});
+		
+		var total = 0;
+		
+		$.each(missing, function(product,quantity) {
+			$('#items').append('<tr><td>'+ITEM[product]+'</td><td>'+quantity+'</td><td>EUR '+centToEUR(PRICE[product]*quantity)+'</td>'+'</tr>');	
+			total += PRICE[product]*quantity;
+		});
+		
+		if (!total) {
+			$('#items').append("<tr><td>No items need to be ordered!</td><td></td><td></td><tr>");
+		}
+		
+		$('#total').html('EUR '+centToEUR(total));
+		
+	}
+	
+	$(function() {
+		setInterval(function() {
+			$.ajax({url: "http://192.168.11.187:8081/", dataType: 'json', success: function(result){
+			updateItemList(result);
+	    }}) }, 500);
+    });
+    
+    
+    function cancel() {
+	    $.ajax("http://192.168.11.187:8081/close").done(function() {
+		    window.location.href = "index.html";
+	    });
+    }
+  	
+  	function order() {
+	  	$.ajax("http://192.168.11.187:8081/close").done(function() {
+		  	window.location.href = "order-confirmed.html";
+	  	});
+  	}
+  	
+  	function centToEUR(value) {
+	  	str = value+'';
+	  	if (str.length < 2)
+	  		str = '0'+str;
+	  	if (str.length < 3)
+	  		str = '0'+str;
+	  	return str.substr(0, str.length-2)+'.'+str.substr(str.length-2, str.length);
+  	}
+  	
+  </script>
+
+
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+  		<div class="row">
+		  	<center><h1>ThingsBy7</h1></center>
+		  	<br/>
+		  	<h3>Items to order</h3><br/>
+  		</div>
+	  <div class="row">
+	    <div class="two-thirds column">
+			<table id="items" class="u-full-width">
+				<tr>
+					<th>Item</th>
+					<th width="80">Quantity</th>
+					<th width="80">Price</th>
+				</tr>
+			</table>
+			<br/>
+			<div class="u-full-width" style="text-align: right;">
+			Total: <b><span id="total"></span></b>
+			</div>
+			<br/><br/>
+			<a class="button button-primary" href="#" onclick="order()">Order</a>
+			<a class="button" href="#" onclick="cancel()">Cancel</a>
+	    </div>
+	    <div class="one-third column">
+	    	<img src="images/minibar.jpg" height="250"/><br/
+	    ></div>
+	  </div>
+  </div>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>

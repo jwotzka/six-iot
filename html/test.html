@@ -1,0 +1,105 @@
+<html>
+
+	<head>
+		<script type="text/javascript" src="jquery.js"></script>
+	</head>
+	
+	<body>
+		
+		<script type="text/javascript">
+		
+			var ITEM = {
+			    'cola': 'Coke',
+			    'fanta': 'Fanta',
+			    'sprite': 'Sprite',
+			    'nuts': 'Nuts',
+			    'heineken': 'Heineken 0.3'
+		    };
+		    
+		    var items = {  
+			   "door_top":[  
+			      "cola",
+			      "cola",
+			      "cola",
+			      "cola",
+			      "cola",
+			      "cola"
+			   ],
+			   "bot":[  
+			      'fanta',
+			      'fanta',
+			      'fanta',
+			      'fanta',
+			      'fanta',
+			      'fanta',
+			      'fanta',
+			      'fanta'
+			   ],
+			   "top":[  
+			      'sprite',
+			      'sprite',
+			      'sprite',
+			      'sprite',
+			      'sprite',
+			      'sprite',
+			      'sprite',
+			      'sprite'
+			   ],
+			   "mid":[  
+			      'sprite',
+			      'sprite',
+			      'sprite',
+			      'sprite',
+			      'sprite',
+			      'sprite',
+			      'sprite',
+			      'sprite'
+			   ],
+			   "door_bot":[  
+			      'heineken',
+			      'heineken',
+			      'heineken',
+			      'heineken'
+			   ]
+			};
+		
+			function updateItemList(result) {
+				$('#result').empty();
+				$.each(result,function(k,v) {
+					$.each(v, function(index, sensor) {
+						if (!sensor) {
+							if (items[k][index] == 'heineken')
+								$('#result').append(ITEM[items[k][index]]+' missing<br/>');
+							console.log(ITEM[items[k][index]]+' missing<br/>');
+						}
+					});
+				});
+			}
+		
+			$(function() {
+				setInterval(function() {
+					$.ajax({url: "http://192.168.11.187:8081/", dataType: 'json', success: function(result){
+					updateItemList(result);
+							        
+				//$("#result").html(result);
+			    }}) },100);
+			
+		    });
+		    
+		    function action(str) {
+			    $.ajax("http://192.168.11.187:8081/"+str);
+		    }
+		    
+		</script>
+		
+		<div>
+			<a href="#" onclick="action('open')">Open</a><br/>
+			<a href="#" onclick="action('close')">Close</a>
+		</div>
+		<div id="result">
+		</div>
+		
+		
+	</body>
+
+</html>

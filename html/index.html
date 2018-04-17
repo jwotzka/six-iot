@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>SIX IoT Showcase</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript">
+
+	  function one() {
+	  		$.ajax("http://192.168.11.188:8081/one").done(function() {
+		    	window.location.href = "coffee.html";
+			});
+	  }
+	  
+	  function two() {
+	  		$.ajax("http://192.168.11.188:8081/two").done(function() {
+		    	window.location.href = "coffee.html";
+			});
+	  }	  
+  </script>
+
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <center><h1>ThingsBy7</h1></center>
+    <br/>
+    <div class="row">
+	    <div class="one-half column">
+	    	<center>
+			    <img src="images/coffeemaker.jpg" height="250"/><br/><br/>
+			    <a class="button button-primary" onclick="one()" href="#">Coffee</a><br/>
+			    <a class="button" onclick="two()" href="#">Double Coffee</a><br/>
+	    	</center>
+	    </div>
+	    <div class="one-half column">
+	    	<center>
+		    	<img src="images/minibar.jpg" height="250"/><br/><br/>
+		    	<a class="button button-primary" href="unlocked.html">Unlock minibar</a>
+	    	</center>
+	    </div>
+	</div>
+  </div>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>
