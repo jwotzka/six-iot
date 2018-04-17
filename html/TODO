@@ -1,12 +1,6 @@
-- Font nicht aus dem Internet holen
-- Test ohne Internet
-- Nach cancel redirect und lock
-- Sensoren testen / filtern
-- Überschriften
-- Evtl. größere Schrift auf iPad?
-- Preisanzeigen mit Nachkommastellen
-
-
 - Autostart der Skripte
+
+
 - Echtes Netzwerk
 - Ordentliche Passwörter für die pi-Konten
+- Test ohne Internet
