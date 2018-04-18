@@ -4,6 +4,13 @@ import time
 import RPi.GPIO as GPIO
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from threading import Thread
+import Adafruit_ADS1x15
+import json
+
+adc = Adafruit_ADS1x15.ADS1115()
+
+# Temp in °C
+coffee_temp = -1
 
 # RPi pin numbers
 BTN_ONE = 11 # out
@@ -50,6 +57,10 @@ def checkLEDs():
         #        print("ON")
 
 
+# Convert ADC input (mV) to °C
+def calcTemp(adc):
+    temp = 25 + (1500 - adc) / 30 # measured temp
+    return (temp - 25) * 2 + 25 # compensate for sensor position
 
 class Server(BaseHTTPRequestHandler):
     def _set_headers(self):
@@ -67,6 +78,7 @@ class Server(BaseHTTPRequestHandler):
         	pressBtn(BTN_ONE)
         elif "two" in self.path:
         	pressBtn(BTN_TWO)
+        self.wfile.write(bytes(json.dumps({'temp': coffee_temp}),"utf-8"))
 		
 		
     def do_HEAD(self):
@@ -84,3 +96,6 @@ Thread(target=httpd.serve_forever).start()
 while 1:
         checkLEDs()
         time.sleep(.01)
+        
+        coffee_temp = calcTemp(adc.read_adc(0, gain=1) / 8)
+    
