@@ -128,20 +128,20 @@
 	
 	$(function() {
 		setInterval(function() {
-			$.ajax({url: "http://192.168.11.187:8081/", dataType: 'json', success: function(result){
+			$.ajax({url: "http://192.168.20.10:8081/", dataType: 'json', success: function(result){
 			updateItemList(result);
 	    }}) }, 500);
     });
     
     
     function cancel() {
-	    $.ajax("http://192.168.11.187:8081/close").done(function() {
+	    $.ajax("http://192.168.20.10:8081/close").done(function() {
 		    window.location.href = "index.html";
 	    });
     }
   	
   	function order() {
-	  	$.ajax("http://192.168.11.187:8081/close").done(function() {
+	  	$.ajax("http://192.168.20.10:8081/close").done(function() {
 		  	window.location.href = "order-confirmed.html";
 	  	});
   	}

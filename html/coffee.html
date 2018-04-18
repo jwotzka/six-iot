@@ -38,6 +38,9 @@
 			setTimeout(function() {
 				window.location.href = "coffee-order.html";
 			}, 3000);
+			$.ajax({url: "http://192.168.20.11:8081/", dataType: 'json', success: function(result){
+				$('#temp').html(Math.round(result.temp*10)/10);
+			}});
 		});
 	</script>
 
@@ -51,6 +54,8 @@
   			<br/><br/>
   		  	<img src="images/coffeemaker.jpg" height="250"/><br/><br/>
 	  		<h3>Coffee is on the way!</h3>
+	  		<br/>
+	  		Coffee Temperature: <b><span id="temp"></span> °C</b>
   		</center>
   	</div>
   </div>
