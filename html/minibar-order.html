@@ -34,61 +34,71 @@
 			    'cola': 'Coke',
 			    'fanta': 'Fanta',
 			    'sprite': 'Sprite',
-			    'nuts': 'Nuts',
-			    'heineken': 'Heineken 0.3'
+			    'nuts': 'Lorenz Erdnüsse geröstet',
+			    'heineken': 'Heineken 0.3',
+			    'spellegrino': 'San Pellegrino Aranciata',
+			    'lipton': 'Sparkling Ice Tea Peach',
+			    'pepsi': "Pepsi Cola",
+			    'cokezero': 'Coca Cola Zero'
+			    
 		    };
 	var PRICE = {
 			    'cola': 150,
 			    'fanta': 150,
 			    'sprite': 150,
 			    'nuts': 100,
-			    'heineken': 200
+			    'heineken': 200,
+			    'spellegrino': 200,
+			    'lipton': 180,
+			    'pepsi': 160,
+			    'cokezero': 160
+			    
 			};
 		    
     var items = {  
 	   "door_top":[  
-	      "cola",
-	      "cola",
-	      "cola",
-	      "cola",
-	      "cola",
-	      "cola"
+	      'nuts',
+	      'nuts',
+	      'nuts',
+	      'nuts',
+	      'nuts',
+	      'nuts'
 	   ],
 	   "bot":[  
-	      'fanta',
-	      'fanta',
-	      'fanta',
-	      'fanta',
-	      'fanta',
-	      'fanta',
-	      'fanta',
-	      'fanta'
+	      'spellegrino',
+	      'spellegrino',
+	      'spellegrino',
+	      'spellegrino',
+	      'spellegrino',
+	      'spellegrino',
+	      'spellegrino',
+	      'spellegrino'
 	   ],
 	   "top":[  
-	      'sprite',
-	      'sprite',
-	      'sprite',
-	      'sprite',
-	      'sprite',
-	      'sprite',
-	      'sprite',
-	      'sprite'
+	      'pepsi',
+	      'pepsi',
+	      'pepsi',
+	      'pepsi',
+	      'pepsi',
+	      'pepsi',
+	      'pepsi',
+	      'pepsi'
 	   ],
 	   "mid":[  
-	      'sprite',
-	      'sprite',
-	      'sprite',
-	      'sprite',
-	      'sprite',
-	      'sprite',
-	      'sprite',
-	      'sprite'
+	   	  'lipton',
+	   	  'lipton',
+	   	  'lipton',
+	   	  'lipton',
+	   	  'lipton',
+	   	  'lipton',
+	   	  'lipton',
+	   	  'lipton'
 	   ],
 	   "door_bot":[  
-	      'heineken',
-	      'heineken',
-	      'heineken',
-	      'heineken'
+	      'cokezero',
+	      'cokezero',
+	      'cokezero',
+	      'cokezero'
 	   ]
 	};
   
@@ -140,9 +150,20 @@
 	    });
     }
   	
+  	//var audio = new Audio('sounds/cash.wav');
   	function order() {
+  		
+	  	//audio.play();
 	  	$.ajax("http://192.168.20.10:8081/close").done(function() {
-		  	window.location.href = "order-confirmed.html";
+	  		$('#buttons').empty();
+	  		$('#buttons').append('<img style="float: left;" height="60" src="images/check.png"/>');
+	  		$('#buttons').append('<h2 style="float: left;display: block;padding-left: 30px;padding-top: 5px;display: block;">Order confirmed!</h2>');
+	  		$('#buttons').append('<br/><br/><br/><br/>Expected delivery time: Tomorrow 10am.');
+	  		
+	  		setTimeout(function() {
+		  		window.location.href = "index.html";
+	  		}, 5000);
+		  	//window.location.href = "order-confirmed.html";
 	  	});
   	}
   	
@@ -183,8 +204,10 @@
 			Total: <b><span id="total"></span></b>
 			</div>
 			<br/><br/>
-			<a class="button button-primary" href="#" onclick="order()">Order</a>
-			<a class="button" href="#" onclick="cancel()">Cancel</a>
+			<span id="buttons">
+				<a class="button button-primary" href="#" onclick="order()">Order</a>
+				<a class="button" href="#" onclick="cancel()">Cancel</a>
+			</span>
 	    </div>
 	    <div class="one-third column">
 	    	<img src="images/minibar.jpg" height="250"/><br/

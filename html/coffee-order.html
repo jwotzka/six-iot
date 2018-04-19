@@ -39,6 +39,23 @@
 
 </head>
 <body>
+
+	<script type="text/javascript">
+		//var audio = new Audio('sounds/cash.wav');
+		function order() {
+		
+	  		//audio.play();
+			$('#buttons').empty();
+	  		$('#buttons').append('<img style="float: left;" height="60" src="images/check.png"/>');
+	  		$('#buttons').append('<h2 style="float: left;display: block;padding-left: 30px;padding-top: 5px;display: block;">Order confirmed!</h2>');
+	  		$('#buttons').append('<br/><br/><br/><br/>Expected delivery time: Tomorrow 10am.');
+	  		setTimeout(function() {
+		  		window.location.href = "index.html";
+	  		}, 5000);
+	  	}
+		
+	</script>
+
 <div style="position: fixed; bottom: 10px; left: 10px;"><img width="200" src="images/six-logo.png"/></div>
 
   <!-- Primary Page Layout
@@ -64,8 +81,10 @@
 	    			</td>
 	    		</tr>
 	    	</table>
-			<a class="button button-primary" href="order-confirmed.html">Order</a>
-			<a class="button" href="index.html">Cancel</a>
+	    	<span id="buttons">
+				<a class="button button-primary" onclick="order()" href="#">Order</a>
+				<a class="button" href="index.html">Cancel</a>
+	    	</span>
 	    </div>
 	    <div class="one-third column">
 	    	<img src="images/coffeemaker.jpg" height="250"/><br/
